@@ -1,0 +1,27 @@
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies and build output
+node_modules/
+dist/
+build/
+.next/
+.vercel/
+.netlify/
+
+# Logs and caches
+*.log
+.cache/
+.parcel-cache/
+
+# Local editor/OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Supabase local runtime artifacts
+supabase/.branches/
+supabase/.temp/

@@ -1,0 +1,6 @@
+# RentaVillaCuracao LLM Guide
+
+The canonical AI-readable guide for this website is available at:
+
+- [llms.txt](./llms.txt)
+

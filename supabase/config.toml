@@ -1,0 +1,19 @@
+project_id = "slscbdrmhzhopvpvcome"
+
+[functions.submit-booking-request]
+verify_jwt = false
+
+[functions.submit-contact-message]
+verify_jwt = false
+
+[functions.get-availability]
+verify_jwt = false
+
+[functions.sync-calendars]
+verify_jwt = false
+
+[functions.send-otp]
+verify_jwt = false
+
+[functions.verify-otp]
+verify_jwt = false

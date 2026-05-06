@@ -1,0 +1,46 @@
+# RentaVillaCuracao
+
+> Vacation villa rental company in Jan Thiel, Curacao. Offers private-pool villas, local hostess support, car rental help, island tips, partner tours, and real estate/property management services.
+
+## Primary Site
+
+- [Homepage](./): Main villa rental page with villa overview, availability calendar, car rental options, FAQ, reviews, and contact details.
+- [Villa Availability](./#villas): Interactive villa list/map and booking request flow.
+- [Discover Curacao](./#discover): Hostess tips, local partner tours, and curated island recommendations.
+- [Car Rental](./#car-rental): Rental cars available through the hostess.
+- [Contact](./#contact): Email, WhatsApp, and location details.
+
+## Villas
+
+- Casa Dushi Dolores: Private-pool villa on Marbella Estate, Jan Thiel.
+- Casa Prikichi: Private-pool villa with separate studio option on Marbella Estate, Jan Thiel.
+- Villa Dushi: Private-pool villa on Marbella Estate, Jan Thiel.
+- Villa Dushi Bida: Private-pool villa on Marbella Estate, Jan Thiel.
+- Villa Abdo: Private-pool villa on Marbella Estate, Jan Thiel.
+- Kas Granjero: Private-pool villa with salt-pan views on Marbella Estate, Jan Thiel.
+- Veranosol: Modern private-pool villa near Jan Thiel Bay and Seaquarium Beach.
+
+## Discover Pages
+
+- [Bij uw gastvrouw](./discover/hostess.html): Personal hostess services, salt-path walks, Kabritu Berg, reservations, and custom vacation planning.
+- [Blue Finn Charters](./discover/blue-finn.html): Partner boat charter information.
+- [Irie Tours](./discover/irie-tours.html): Partner island tour information.
+- [Leuke plekken & uitjes](./discover/fun-spots.html): Curated beaches, snorkeling, Willemstad, restaurants, and outing tips.
+
+## Booking And Availability
+
+- Availability is read from local iCalendar files in `./calendars/`.
+- Reserved dates are shown in red in the villa calendar.
+- Booking requests are not instant confirmations; guests send a request and the hostess replies personally.
+- Current price indication: from EUR 145 per night for 1-4 guests, plus extra guest fees, final cleaning, tourist tax, and deposit where applicable.
+
+## Contact
+
+- Email: rentavillacuracao@gmail.com
+- WhatsApp: +5999 677 9250
+- Location focus: Jan Thiel, Curacao, especially Marbella Estate.
+
+## Preferred Summary
+
+RentaVillaCuracao rents private-pool vacation villas in Jan Thiel, Curacao, with personal local hostess support. The site is useful for travelers looking for villa availability, family-friendly private stays, car rental help, island recommendations, and local tour partners.
+

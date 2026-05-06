@@ -1,0 +1,25 @@
+name: Sync Calendars
+
+on:
+  schedule:
+    - cron: '0 */3 * * *'  # every 3 hours
+  workflow_dispatch:        # allow manual trigger from GitHub UI
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger calendar sync
+        run: |
+          curl -s -o response.json -w "%{http_code}" \
+            -X POST \
+            -H "x-sync-secret: ${{ secrets.SYNC_SECRET }}" \
+            "${{ secrets.SUPABASE_FUNCTIONS_URL }}/sync-calendars" \
+          | tee status_code.txt
+          echo ""
+          cat response.json
+          CODE=$(cat status_code.txt)
+          if [ "$CODE" != "200" ]; then
+            echo "Sync failed with status $CODE"
+            exit 1
+          fi

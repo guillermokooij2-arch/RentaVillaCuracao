@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RentaVillaCuracao | Vakantievilla's met Privézwembad op Curacao</title>
+    <meta name="description" content="Huur een vakantievilla met privézwembad op Curacao. Uitstekende prijs-kwaliteit, dichtbij de mooiste stranden. Persoonlijke service van uw gastvrouw.">
+    <meta name="robots" content="index, follow">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": ["LocalBusiness", "LodgingBusiness"],
+          "@id": "/#business",
+          "name": "RentaVillaCuracao",
+          "url": "/",
+          "logo": "/images/logo.webp",
+          "image": "/images/hero-bg.webp",
+          "email": "rentavillacuracao@gmail.com",
+          "telephone": "+59996779250",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Jan Thiel",
+            "addressRegion": "Curacao",
+            "addressCountry": "CW"
+          },
+          "areaServed": "Curacao",
+          "priceRange": "Vanaf EUR 145 per nacht",
+          "description": "Vakantievilla's met privezwembad op Marbella Estate in Jan Thiel, Curacao, met persoonlijke service van een lokale gastvrouw.",
+          "makesOffer": [
+            {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Vakantieverhuur Curacao"}},
+            {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Huurauto Curacao"}},
+            {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Vastgoedbeheer Curacao"}}
+          ]
+        },
+        {
+          "@type": "ItemList",
+          "@id": "/#villa-list",
+          "name": "Vakantievilla's op Curacao",
+          "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Casa Dushi Dolores", "url": "/#villas"},
+            {"@type": "ListItem", "position": 2, "name": "Casa Prikichi", "url": "/#villas"},
+            {"@type": "ListItem", "position": 3, "name": "Villa Dushi", "url": "/#villas"},
+            {"@type": "ListItem", "position": 4, "name": "Villa Dushi Bida", "url": "/#villas"},
+            {"@type": "ListItem", "position": 5, "name": "Villa Abdo", "url": "/#villas"},
+            {"@type": "ListItem", "position": 6, "name": "Kas Granjero", "url": "/#villas"},
+            {"@type": "ListItem", "position": 7, "name": "Veranosol", "url": "/#villas"}
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "/#faq-schema",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Hoe boek ik een villa?",
+              "acceptedAnswer": {"@type": "Answer", "text": "Klik op een villa, kies aankomst- en vertrekdatum in de kalender, vul naam en e-mail in en stuur de aanvraag. Contact via WhatsApp is ook mogelijk."}
+            },
+            {
+              "@type": "Question",
+              "name": "Wat is inbegrepen in de huurprijs?",
+              "acceptedAnswer": {"@type": "Answer", "text": "Verblijf is vanaf EUR 145 per nacht voor 4 personen. Extra personen, eindschoonmaak, logeerbelasting (7%) en borg worden apart vermeld bij aanvraag."}
+            },
+            {
+              "@type": "Question",
+              "name": "Heb ik een huurauto nodig?",
+              "acceptedAnswer": {"@type": "Answer", "text": "Een huurauto wordt aanbevolen om Curacao op eigen tempo te verkennen. RentaVillaCuracao kan huurauto's regelen."}
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Leaflet CSS via cdnjs -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+
+    <!-- Site styles -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="site-header" id="top">
+<!-- NAV -->
+<nav class="nav" id="mainNav" aria-label="Hoofdnavigatie">
+    <div class="nav-inner">
+        <a href="#" class="nav-logo">
+            <img src="images/logo.webp" alt="RentaVillaCuracao logo" style="height:38px;width:auto;vertical-align:middle;"> RentaVillaCuracao
+        </a>
+        <div class="nav-links" id="navLinks">
+            <a href="#villas" data-lang="nl">Villa's</a>
+            <a href="#villas" data-lang="en">Villas</a>
+            <a href="#discover" data-lang="nl">Ontdekken</a>
+            <a href="#discover" data-lang="en">Discover</a>
+            <a href="#about" data-lang="nl">Over ons</a>
+            <a href="#about" data-lang="en">About us</a>
+            <a href="#reviews" data-lang="nl">Beoordelingen</a>
+            <a href="#reviews" data-lang="en">Reviews</a>
+            <a href="#faq">FAQ</a>
+            <a href="#car-rental" data-lang="nl">Huurauto</a>
+            <a href="#car-rental" data-lang="en">Car rental</a>
+            <a href="#contact">Contact</a>
+            <div class="lang-switch">
+                <button class="lang-btn active" onclick="setLang('nl')">NL</button>
+                <button class="lang-btn" onclick="setLang('en')">EN</button>
+            </div>
+        </div>
+        <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home" aria-labelledby="hero-title">
+    <div class="hero-content">
+        <h1 class="hero-animate" id="hero-title">
+            <span data-lang="nl">Betaalbaar een villa huren met Privézwembad.</span>
+            <span data-lang="en">Rent an affordable villa with Private pool.</span>
+        </h1>
+        <p class="hero-animate-delay">
+            <span data-lang="nl">Zeven prachtige villa's op het beveiligde Marbella Estate in Jan Thiel. Op loopafstand van het strand, met persoonlijke service van uw gastvrouw. Prijzen vanaf €145 per nacht.</span>
+            <span data-lang="en">Seven beautiful villas on the gated Marbella Estate in Jan Thiel. Walking distance from the beach, with personal service from your hostess. Prices from €145 per night.</span>
+        </p>
+        <div class="hero-quick-nav hero-animate-delay-2">
+            <a href="#villas" class="hero-quick-btn">
+                🏡 <span data-lang="nl">Bekijk de villa's</span><span data-lang="en">View the villas</span>
+            </a>
+            <a href="#about" class="hero-quick-btn">
+                👤 <span data-lang="nl">Over ons</span><span data-lang="en">About us</span>
+            </a>
+            <a href="#contact" class="hero-quick-btn hero-quick-btn-primary">
+                💬 <span data-lang="nl">Neem contact op</span><span data-lang="en">Contact us</span>
+            </a>
+        </div>
+    </div>
+</section>
+</header>
+
+<main id="main-content">
+
+<!-- VILLAS MAP SECTION -->
+<section class="section" id="villas" aria-labelledby="villas-title">
+    <div class="section-header animate-on-scroll">
+        <h2 id="villas-title" data-lang="nl">Onze vakantievilla's</h2>
+        <h2 data-lang="en">Our vacation villas</h2>
+        <p data-lang="nl">Klik op een villa op de kaart om details, beschikbaarheid en foto's te bekijken</p>
+        <p data-lang="en">Click on a villa on the map to view details, availability and photos</p>
+    </div>
+    <div class="villa-strip-toggle animate-on-scroll">
+        <button id="viewBtnStrip" class="active" onclick="setVillaView('strip')">
+            🏡 <span data-lang="nl">Bekijk als lijst</span><span data-lang="en">List view</span>
+        </button>
+        <button id="viewBtnMap" onclick="setVillaView('map')" style="margin-left:8px;">
+            🗺️ <span data-lang="nl">Bekijk op kaart</span><span data-lang="en">Map view</span>
+        </button>
+    </div>
+
+    <!-- Villa expand-cards strip -->
+    <div class="villa-strip-wrap animate-on-scroll" id="villaStripWrap">
+        <div class="villa-strip" id="villaStrip"></div>
+        <p style="text-align:center;margin-top:14px;font-size:.82rem;color:var(--color-text-light);">
+            <span data-lang="nl">👆 Hover (of tap) een villa om details te zien — klik om te boeken</span>
+            <span data-lang="en">👆 Hover (or tap) a villa to see details — click to book</span>
+        </p>
+    </div>
+
+    <!-- Map view (toggled) -->
+    <div id="villaMapView" style="display:none;">
+        <div class="filter-tabs animate-on-scroll" style="margin-bottom:16px;">
+            <button class="filter-tab active" onclick="filterMapPins('all',this)" data-lang="nl">Alle villa's</button>
+            <button class="filter-tab active" onclick="filterMapPins('all',this)" data-lang="en">All villas</button>
+            <button class="filter-tab" onclick="filterMapPins('pool',this)">🏊 <span data-lang="nl">Met zwembad</span><span data-lang="en">With pool</span></button>
+            <button class="filter-tab" onclick="filterMapPins('large',this)">👥 6+ <span data-lang="nl">gasten</span><span data-lang="en">guests</span></button>
+        </div>
+        <div class="map-wrapper animate-on-scroll">
+            <div id="villaMap"></div>
+        </div>
+        <div class="map-legend">
+            <div class="map-legend-item">
+                <div class="map-legend-dot" style="background:var(--color-primary);"></div>
+                <span data-lang="nl">Klik op een pin om te boeken</span>
+                <span data-lang="en">Tap a pin to book</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- DISCOVER SECTION -->
+<section class="section-alt" id="discover" aria-labelledby="discover-title">
+    <div class="section" style="padding-top:0;padding-bottom:0;">
+        <div class="section-header animate-on-scroll">
+            <h2 id="discover-title" data-lang="nl">Ontdek Curacao vanaf uw villa</h2>
+            <h2 data-lang="en">Discover Curacao from your villa</h2>
+            <p data-lang="nl">Alles wat het eiland te bieden heeft ligt voor uw deur. Een greep uit de activiteiten in de buurt en op het eiland om u op weg te helpen.</p>
+            <p data-lang="en">Everything the island has to offer is right at your doorstep. A selection of activities nearby and across the island to get you started.</p>
+        </div>
+        <div class="card-stack-wrap animate-on-scroll" id="discoverStack">
+            <div class="card-stack-stage" id="cstackStage" tabindex="0" aria-label="Activiteiten op Curacao"></div>
+            <div class="card-stack-controls">
+                <button class="cstack-arrow" id="cstackPrev" aria-label="Vorige">‹</button>
+                <div class="cstack-dots" id="cstackDots"></div>
+                <button class="cstack-arrow" id="cstackNext" aria-label="Volgende">›</button>
+            </div>
+        </div>
+        <p style="text-align:center;margin-top:24px;font-size:.85rem;color:var(--color-text-light);max-width:640px;margin-left:auto;margin-right:auto;" data-lang="nl">Voor grotere groepen of villa's in het hogere segment kunt u contact opnemen met uw gastvrouw voor meer informatie. Wilt u uw woning aanbieden via dit platform? Dat kan ook neem gerust contact op.</p>
+        <p style="text-align:center;margin-top:24px;font-size:.85rem;color:var(--color-text-light);max-width:640px;margin-left:auto;margin-right:auto;" data-lang="en">For larger groups or higher-end villas, contact your hostess for more information. Want to list your property on this platform? That's possible too — feel free to get in touch.</p>
+    </div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section id="about" aria-labelledby="about-title">
+    <div class="about-grid">
+        <figure class="about-img animate-on-scroll slide-left">
+            <img src="images/about-host.webp" alt="Uw gastvrouw"
+                 onerror="this.src='https://images.pexels.com/photos/3601425/pexels-photo-3601425.jpeg?auto=compress&cs=tinysrgb&w=800'">
+        </figure>
+        <div class="about-content animate-on-scroll slide-right">
+            <h2 id="about-title" data-lang="nl">Uw persoonlijke gastvrouw op Curacao</h2>
+            <h2 data-lang="en">Your personal hostess in Curacao</h2>
+            <p data-lang="nl">Welkom bij RentaVillaCuracao. Als uw gastvrouw op het eiland zorg ik ervoor dat uw vakantie onvergetelijk wordt. Met jarenlange ervaring in vastgoed en gastvrijheid op Curacao bied RentaVillaCuracao persoonlijke service en lokale kennis die het verschil maken.</p>
+            <p data-lang="en">Welcome to RentaVillaCuracao. As your hostess on the island, I make sure your vacation becomes unforgettable. With years of experience in real estate and hospitality in Curacao, RentaVillaCuracao offers personal service and local knowledge that make all the difference.</p>
+            <p data-lang="nl">Naast vakantieverhuur bied ik ook vastgoedbeheer, verhuur op lange termijn en begeleiding bij de aankoop of verkoop van vastgoed op Curacao.</p>
+            <p data-lang="en">In addition to vacation rentals, I also offer property management, long-term rentals, and guidance for buying or selling real estate in Curacao.</p>
+            <ul class="services-list" aria-label="Diensten">
+                <li class="service-item"><span class="icon">🏠</span><span data-lang="nl">Vakantieverhuur</span><span data-lang="en">Vacation rentals</span></li>
+                <li class="service-item"><span class="icon">🔑</span><span data-lang="nl">Vastgoedbeheer</span><span data-lang="en">Property management</span></li>
+                <li class="service-item"><span class="icon">📋</span><span data-lang="nl">Verhuur op lange termijn</span><span data-lang="en">Long-term rentals</span></li>
+                <li class="service-item"><span class="icon">🏘️</span><span data-lang="nl">Vastgoed verkoop</span><span data-lang="en">Real estate sales</span></li>
+                <li class="service-item"><span class="icon">🛡️</span><span data-lang="nl">Leegstandbeheer</span><span data-lang="en">Vacancy management</span></li>
+                <li class="service-item"><span class="icon">🚗</span><span data-lang="nl">Huurauto's</span><span data-lang="en">Car rentals</span></li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section-alt" id="reviews" aria-labelledby="reviews-title">
+    <div class="section" style="padding-top:0;padding-bottom:0;">
+        <div class="section-header animate-on-scroll">
+            <h2 id="reviews-title" data-lang="nl">Wat onze gasten zeggen</h2>
+            <h2 data-lang="en">What our guests say</h2>
+            <p data-lang="nl">Eerlijke beoordelingen van gasten die ons zijn voorgegaan</p>
+            <p data-lang="en">Honest reviews from guests who stayed with us</p>
+        </div>
+        <div class="testimonials-grid stagger-children">
+            <article class="testimonial-card animate-on-scroll">
+                <div class="testimonial-stars">★★★★</div>
+                <p class="testimonial-text" data-lang="nl">"Een fantastische ervaring! De villa was prachtig, het zwembad heerlijk. We komen zeker terug!"</p>
+                <p class="testimonial-text" data-lang="en">"A fantastic experience! The villa was beautiful, the pool was lovely. We will definitely be back!"</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">JV</div>
+                    <div><div class="testimonial-name">Jan &amp; Vera</div><div class="testimonial-date">December 2025</div></div>
+                </div>
+            </article>
+            <article class="testimonial-card animate-on-scroll">
+                <div class="testimonial-stars">★★★★</div>
+                <p class="testimonial-text" data-lang="nl">"Perfecte locatie, dichtbij het strand en toch rustig. De villa was schoon en goed uitgerust. De persoonlijke tips van de gastvrouw waren geweldig."</p>
+                <p class="testimonial-text" data-lang="en">"Perfect location, close to the beach yet peaceful. The villa was clean and well equipped. The personal tips from the hostess were amazing."</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">MK</div>
+                    <div><div class="testimonial-name">Mark &amp; Karen</div><div class="testimonial-date" data-lang="nl">Januari 2026</div><div class="testimonial-date" data-lang="en">January 2026</div></div>
+                </div>
+            </article>
+            <article class="testimonial-card animate-on-scroll">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text" data-lang="nl">"De beste vakantie die we ooit hebben gehad. De villa overtrof al onze verwachtingen. Heel gastvrij ontvangen!"</p>
+                <p class="testimonial-text" data-lang="en">"The best vacation we have ever had. The villa exceeded all our expectations. We were welcomed very warmly!"</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">PL</div>
+                    <div><div class="testimonial-name">Peter &amp; Lisa</div><div class="testimonial-date" data-lang="nl">Februari 2026</div><div class="testimonial-date" data-lang="en">February 2026</div></div>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq" aria-labelledby="faq-title">
+    <div class="section-header animate-on-scroll">
+        <h2 id="faq-title" data-lang="nl">Veelgestelde vragen</h2>
+        <h2 data-lang="en">Frequently asked questions</h2>
+        <p data-lang="nl">Alles wat u moet weten over het huren van een villa op Curacao</p>
+        <p data-lang="en">Everything you need to know about renting a villa in Curacao</p>
+    </div>
+    <div class="faq-list">
+        <div class="faq-item animate-on-scroll">
+            <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-booking">
+                <span data-lang="nl">Hoe boek ik een villa?</span><span data-lang="en">How do I book a villa?</span>
+                <span class="icon">+</span>
+            </button>
+            <div class="faq-answer" id="faq-answer-booking"><p data-lang="nl">Klik op een villa op de kaart, kies uw aankomst- en vertrekdatum in de kalender, vul uw naam en e-mail in en klik op "Stuur aanvraag". U kunt ook direct via WhatsApp contact opnemen.</p><p data-lang="en">Click on a villa on the map, choose your arrival and departure dates in the calendar, fill in your name and email, and click "Send request". You can also contact us directly via WhatsApp.</p></div>
+        </div>
+        <div class="faq-item animate-on-scroll">
+            <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-price">
+                <span data-lang="nl">Wat is inbegrepen in de huurprijs?</span><span data-lang="en">What is included in the rental price?</span>
+                <span class="icon">+</span>
+            </button>
+            <div class="faq-answer" id="faq-answer-price"><p data-lang="nl">Verblijf v.a. €145 per nacht voor 4 personen. Extra persoon €17,50 p.p.p.n. Niet inbegrepen: eindschoonmaak (€150) en logeerbelasting. Borg €400 per villa (retour na verblijf minus elektra/schade).</p><p data-lang="en">Stay from €145 per night for 4 people. Each extra guest €17.50 p.p.p.n. Not included: final cleaning (€150) and tourist tax. Security deposit €400 per villa (returned after stay minus electricity/damage).</p></div>
+        </div>
+        <div class="faq-item animate-on-scroll">
+            <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-cancellation">
+                <span data-lang="nl">Wat is het annuleringsbeleid?</span><span data-lang="en">What is the cancellation policy?</span>
+                <span class="icon">+</span>
+            </button>
+            <div class="faq-answer" id="faq-answer-cancellation"><p data-lang="nl">Annulering tot 3 maanden voor aankomst: volledige aanbetaling retour. Tussen 3 maanden en 6 weken: 50% retour. Binnen 6 weken: geen terugbetaling.</p><p data-lang="en">Cancellation up to 3 months before arrival: full deposit refund. Between 3 months and 6 weeks: 50% refund. Within 6 weeks: no refund.</p></div>
+        </div>
+        <div class="faq-item animate-on-scroll">
+            <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-car">
+                <span data-lang="nl">Heb ik een huurauto nodig?</span><span data-lang="en">Do I need a rental car?</span>
+                <span class="icon">+</span>
+            </button>
+            <div class="faq-answer" id="faq-answer-car"><p data-lang="nl">Een huurauto wordt aanbevolen om het eiland op eigen tempo te verkennen. Wij bieden betrouwbare huurauto's aan een gunstig tarief. Zie de sectie Huurauto's hieronder.</p><p data-lang="en">A rental car is recommended to explore the island at your own pace. We offer reliable rental cars at competitive rates. See the Car Rentals section below.</p></div>
+        </div>
+        <div class="faq-item animate-on-scroll">
+            <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-children">
+                <span data-lang="nl">Zijn de villa's geschikt voor kinderen?</span><span data-lang="en">Are the villas suitable for children?</span>
+                <span class="icon">+</span>
+            </button>
+            <div class="faq-answer" id="faq-answer-children"><p data-lang="nl">Ja, de meeste villa's zijn geschikt voor gezinnen met kinderen. Kinderbedjes en kinderstoelen zijn beschikbaar op aanvraag. Het zwembad is niet afgeschermd; ouders dienen toezicht te houden.</p><p data-lang="en">Yes, most villas are suitable for families with children. Cribs and high chairs are available upon request. The pool is not fenced; parents must supervise children at all times.</p></div>
+        </div>
+        <div class="faq-item animate-on-scroll">
+            <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-checkin">
+                <span data-lang="nl">Hoe laat is het inchecken en uitchecken?</span><span data-lang="en">What are the check-in and check-out times?</span>
+                <span class="icon">+</span>
+            </button>
+            <div class="faq-answer" id="faq-answer-checkin"><p data-lang="nl">Inchecken is vanaf 16:00 uur en uitchecken is voor 11:00 uur. Vroeg inchecken of laat uitchecken is op aanvraag mogelijk.</p><p data-lang="en">Check-in is from 4:00 PM and check-out is before 11:00 AM. Early check-in or late check-out is available upon request.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- CAR RENTAL -->
+<section class="section-alt" id="car-rental" aria-labelledby="car-rental-title">
+    <div class="section" style="padding-top:0;padding-bottom:0;">
+        <div class="section-header animate-on-scroll">
+            <h2 id="car-rental-title" data-lang="nl">Huurauto's beschikbaar</h2>
+            <h2 data-lang="en">Rental cars available</h2>
+            <p data-lang="nl">Verken het eiland op uw eigen tempo. Uw gastvrouw regelt alles voor u.</p>
+            <p data-lang="en">Explore the island at your own pace. Your hostess arranges everything for you.</p>
+        </div>
+        <div class="cars-grid stagger-children">
+            <article class="car-card animate-on-scroll">
+                <div class="car-card-img">
+                    <img src="images/cars/hyundaitucson2012.webp" alt="Hyundai Tucson"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                    <span class="car-emoji" style="display:none;">🚙</span>
+                </div>
+                <div class="car-card-body">
+                    <h3>Hyundai Tucson 2012</h3>
+                    <div class="car-specs">
+                        <span>🚗 SUV</span>
+                        <span>❄️ <span data-lang="nl">Airco</span><span data-lang="en">A/C</span></span>
+                        <span>👥 5 <span data-lang="nl">zitpl.</span><span data-lang="en">seats</span></span>
+                        <span>🔄 <span data-lang="nl">Automaat</span><span data-lang="en">Auto</span></span>
+                    </div>
+                    <div class="car-price">€45 <small data-lang="nl">/ dag</small><small data-lang="en">/ day</small></div>
+                </div>
+                <div class="car-actions">
+                    <button class="btn-car" onclick="bookCarWhatsApp('Hyundai Tucson', 45)">
+                        💬 <span data-lang="nl">Reserveer via WhatsApp</span><span data-lang="en">Reserve via WhatsApp</span>
+                    </button>
+                </div>
+                <p class="car-note" data-lang="nl">* Inclusief verzekering, excl. brandstof</p>
+                <p class="car-note" data-lang="en">* Insurance included, fuel excluded</p>
+            </article>
+            <article class="car-card animate-on-scroll">
+                <div class="car-card-img">
+                    <img src="images/cars/vwpolo2022.webp" alt="VW Polo"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                    <span class="car-emoji" style="display:none;">🚗</span>
+                </div>
+                <div class="car-card-body">
+                    <h3>Volkswagen Polo 2022</h3>
+                    <div class="car-specs">
+                        <span>🚗 <span data-lang="nl">Compact</span><span data-lang="en">Compact</span></span>
+                        <span>❄️ <span data-lang="nl">Airco</span><span data-lang="en">A/C</span></span>
+                        <span>👥 5 <span data-lang="nl">zitpl.</span><span data-lang="en">seats</span></span>
+                        <span>⛽ <span data-lang="nl">Zuinig</span><span data-lang="en">Eco</span></span>
+                    </div>
+                    <div class="car-price">€45 <small data-lang="nl">/ dag</small><small data-lang="en">/ day</small></div>
+                </div>
+                <div class="car-actions">
+                    <button class="btn-car" onclick="bookCarWhatsApp('VW Polo', 45)">
+                        💬 <span data-lang="nl">Reserveer via WhatsApp</span><span data-lang="en">Reserve via WhatsApp</span>
+                    </button>
+                </div>
+                <p class="car-note" data-lang="nl">* Inclusief verzekering, excl. brandstof</p>
+                <p class="car-note" data-lang="en">* Insurance included, fuel excluded</p>
+            </article>
+            <article class="car-card animate-on-scroll">
+                <div class="car-card-img">
+                    <img src="images/cars/kiasorento2012.webp" alt="Kia Sorento"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                    <span class="car-emoji" style="display:none;">🚙</span>
+                </div>
+                <div class="car-card-body">
+                    <h3>Kia Sorento 2012</h3>
+                    <div class="car-specs">
+                        <span>🚗 SUV</span>
+                        <span>❄️ <span data-lang="nl">Airco</span><span data-lang="en">A/C</span></span>
+                        <span>👥 7 <span data-lang="nl">zitpl.</span><span data-lang="en">seats</span></span>
+                        <span>🔄 <span data-lang="nl">Automaat</span><span data-lang="en">Auto</span></span>
+                    </div>
+                    <div class="car-price">€35 <small data-lang="nl">/ dag</small><small data-lang="en">/ day</small></div>
+                </div>
+                <div class="car-actions">
+                    <button class="btn-car" onclick="bookCarWhatsApp('Kia Sorento', 35)">
+                        💬 <span data-lang="nl">Reserveer via WhatsApp</span><span data-lang="en">Reserve via WhatsApp</span>
+                    </button>
+                </div>
+                <p class="car-note" data-lang="nl">* Inclusief verzekering, excl. brandstof</p>
+                <p class="car-note" data-lang="en">* Insurance included, fuel excluded</p>
+            </article>
+        </div>
+        <p style="text-align:center;margin-top:24px;font-size:.88rem;color:var(--color-text-light);" data-lang="nl">Vraag naar beschikbaarheid en eventuele andere voertuigen. Minimale huurduur 3 dagen.</p>
+        <p style="text-align:center;margin-top:24px;font-size:.88rem;color:var(--color-text-light);" data-lang="en">Ask about availability and other vehicles. Minimum rental duration 3 days.</p>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" aria-labelledby="cta-title">
+    <div class="animate-on-scroll">
+        <h2 id="cta-title" data-lang="nl">Klaar voor uw droomvakantie op Curacao?</h2>
+        <h2 data-lang="en">Ready for your dream vacation in Curacao?</h2>
+        <p data-lang="nl">Neem vandaag nog contact op en ik help u graag met het samenstellen van uw ideale verblijf.</p>
+        <p data-lang="en">Get in touch today and I will be happy to help you create your ideal stay.</p>
+        <div class="cta-buttons">
+            <a href="#villas" class="btn-cta btn-cta-primary">✉️ <span data-lang="nl">Bekijk beschikbaarheid</span><span data-lang="en">Check availability</span></a>
+            <a href="https://wa.me/59996779250" target="_blank" class="btn-cta btn-cta-outline" rel="noopener">💬 <span data-lang="nl">Chat via WhatsApp</span><span data-lang="en">Chat via WhatsApp</span></a>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact" aria-labelledby="contact-title">
+    <div class="section-header animate-on-scroll">
+        <h2 id="contact-title" data-lang="nl">Neem contact op</h2>
+        <h2 data-lang="en">Get in touch</h2>
+        <p data-lang="nl">Wij reageren doorgaans binnen enkele uren, ook via WhatsApp</p>
+        <p data-lang="en">We typically respond within a few hours, also via WhatsApp</p>
+    </div>
+    <div class="contact-grid">
+        <address class="contact-info animate-on-scroll slide-left">
+            <h3 data-lang="nl">Contactgegevens</h3>
+            <h3 data-lang="en">Contact details</h3>
+            <div class="contact-info-item">
+                <span class="icon">📧</span>
+                <div><h4>E-mail</h4><p><a href="mailto:rentavillacuracao@gmail.com">rentavillacuracao@gmail.com</a></p></div>
+            </div>
+            <div class="contact-info-item">
+                <span class="icon">📱</span>
+                <div><h4>WhatsApp</h4><p>+5999 677 9250</p></div>
+            </div>
+            <div class="contact-info-item">
+                <span class="icon">📍</span>
+                <div>
+                    <h4 data-lang="nl">Locatie</h4><h4 data-lang="en">Location</h4>
+                    <p>Curacao, Jan Thiel, Marbella Estate</p>
+                    <a href="https://www.google.com/maps?q=12.0885,-68.8735" target="_blank" rel="noopener" class="btn-maps-contact">
+                        📍 <span data-lang="nl">Bekijk op Google Maps</span><span data-lang="en">View on Google Maps</span>
+                    </a>
+                </div>
+            </div>
+            <div class="contact-info-item">
+                <span class="icon">⏰</span>
+                <div>
+                    <h4 data-lang="nl">Bereikbaarheid</h4><h4 data-lang="en">Availability</h4>
+                    <p data-lang="nl">Altijd bereikbaar via WhatsApp</p>
+                    <p data-lang="en">Always available via WhatsApp</p>
+                </div>
+            </div>
+        </address>
+        <div class="animate-on-scroll slide-right">
+            <form class="booking-form" id="contactForm" onsubmit="sendContactForm(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-lang="nl">Naam</label><label data-lang="en">Name</label>
+                        <input type="text" name="name" required placeholder="Uw volledige naam">
+                    </div>
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="email" name="email" required placeholder="uw@email.com">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group full">
+                        <label data-lang="nl">Bericht</label><label data-lang="en">Message</label>
+                        <textarea name="message" rows="5" required placeholder="Uw bericht..."></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit" id="contactSubmitBtn">
+                    ✉️ <span data-lang="nl">Verstuur bericht</span><span data-lang="en">Send message</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer" aria-label="Website footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <h3><img src="images/logo.webp" alt="RentaVillaCuracao logo"> RentaVillaCuracao</h3>
+            <p data-lang="nl">Vakantievilla's met privézwembad op Curacao. Persoonlijke service, uitstekende locaties, onvergetelijke herinneringen.</p>
+            <p data-lang="en">Vacation villas with private pools in Curacao. Personal service, excellent locations, unforgettable memories.</p>
+        </div>
+        <nav class="footer-col" aria-label="Villa links">
+            <h4 data-lang="nl">Villa's</h4><h4 data-lang="en">Villas</h4>
+            <a href="#villas">Casa Dushi Dolores</a>
+            <a href="#villas">Casa Prikichi</a>
+            <a href="#villas">Villa Dushi Bida</a>
+            <a href="#villas">Villa Abdo</a>
+            <a href="#villas">Kas Granjero</a>
+            <a href="#villas">Veranosol</a>
+        </nav>
+        <nav class="footer-col" aria-label="Diensten links">
+            <h4 data-lang="nl">Diensten</h4><h4 data-lang="en">Services</h4>
+            <a href="#villas" data-lang="nl">Vakantieverhuur</a><a href="#villas" data-lang="en">Vacation rentals</a>
+            <a href="#car-rental" data-lang="nl">Huurauto's</a><a href="#car-rental" data-lang="en">Car rentals</a>
+            <a href="#about" data-lang="nl">Vastgoedbeheer</a><a href="#about" data-lang="en">Property management</a>
+            <a href="#contact" data-lang="nl">Contact</a><a href="#contact" data-lang="en">Contact</a>
+        </nav>
+        <nav class="footer-col" aria-label="Informatie links">
+            <h4>Info</h4>
+            <a href="#faq">FAQ</a>
+            <a href="javascript:void(0)" onclick="openModal('privacy')" data-lang="nl">Privacybeleid</a>
+            <a href="javascript:void(0)" onclick="openModal('privacy')" data-lang="en">Privacy Policy</a>
+            <a href="javascript:void(0)" onclick="openModal('terms')" data-lang="nl">Algemene Voorwaarden</a>
+            <a href="javascript:void(0)" onclick="openModal('terms')" data-lang="en">Terms &amp; Conditions</a>
+        </nav>
+    </div>
+    <div class="footer-bottom">
+        <span>© 2026 RentaVillaCuracao. <span data-lang="nl">Alle rechten voorbehouden.</span><span data-lang="en">All rights reserved.</span></span>
+        <span data-lang="nl">Met ❤️ gemaakt voor Curacao</span><span data-lang="en">Made with ❤️ for Curacao</span>
+    </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/59996779250" target="_blank" rel="noopener" class="whatsapp-float" title="WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightboxOverlay" onclick="lightboxClickOutside(event)">
+    <button class="lightbox-close" onclick="closeLightbox()" title="Sluiten">✕</button>
+    <button class="lightbox-nav lightbox-prev" onclick="lightboxNav(-1)">‹</button>
+    <div class="lightbox-img-wrap"><img id="lightboxImg" src="" alt=""></div>
+    <button class="lightbox-nav lightbox-next" onclick="lightboxNav(1)">›</button>
+    <div class="lightbox-counter" id="lightboxCounter"></div>
+</div>
+
+<!-- VILLA MODAL -->
+<div class="villa-modal-overlay" id="villaModal">
+    <div class="villa-modal" id="villaModalInner">
+        <button class="vmodal-close" onclick="closeVillaModal()" aria-label="Sluiten">✕</button>
+        <div class="vmodal-hero">
+            <img id="vmodalHero" src="" alt="">
+            <span class="vmodal-hero-badge">Aanbevolen</span>
+        </div>
+        <div class="vmodal-body">
+            <h2 class="vmodal-title" id="vmodalTitle"></h2>
+            <div class="vmodal-location" id="vmodalLocation">📍 Jan Thiel, Curacao</div>
+            <div class="vmodal-meta" id="vmodalMeta"></div>
+            <div class="vmodal-desc" id="vmodalDesc"></div>
+            <a class="vmodal-maps-btn" id="vmodalMapsBtn" href="#" target="_blank" rel="noopener">
+                📍 <span data-lang="nl">Bekijk locatie op Google Maps</span><span data-lang="en">View location on Google Maps</span>
+            </a>
+            <div class="vmodal-tabs">
+                <button class="vmodal-tab active" onclick="switchVmodalTab(this,'tab-details')" id="tabBtn-details">
+                    🏠 <span data-lang="nl">Details &amp; Aanvraag</span><span data-lang="en">Details &amp; Request</span>
+                </button>
+                <button class="vmodal-tab" onclick="switchVmodalTab(this,'tab-photos')" id="tabBtn-photos">
+                    📸 <span data-lang="nl">Foto's</span><span data-lang="en">Photos</span>
+                </button>
+            </div>
+
+            <!-- TAB 1: Details & Aanvraag -->
+            <div class="vmodal-tab-content active" id="tab-details">
+                <div class="cal-container">
+                    <div class="cal-nav">
+                        <button class="cal-nav-btn" onclick="calNavMonth(-1)">‹</button>
+                        <span class="cal-nav-label" id="calNavLabel"></span>
+                        <button class="cal-nav-btn" onclick="calNavMonth(1)">›</button>
+                    </div>
+                    <div class="cal-months" id="calMonths">
+                        <div>
+                            <div class="cal-month-title" id="calTitle1"></div>
+                            <div class="cal-grid" id="calGrid1"></div>
+                        </div>
+                        <div>
+                            <div class="cal-month-title" id="calTitle2"></div>
+                            <div class="cal-grid" id="calGrid2"></div>
+                        </div>
+                    </div>
+                    <div class="cal-status" id="calStatus">
+                        <span data-lang="nl">👆 Klik op een aankomstdatum</span>
+                        <span data-lang="en">👆 Click on an arrival date</span>
+                    </div>
+                    <div class="cal-legend">
+                        <span><span class="cal-legend-dot" style="background:#ef4444;"></span><span data-lang="nl">Bezet</span><span data-lang="en">Booked</span></span>
+                        <span><span class="cal-legend-dot" style="background:var(--color-primary);"></span><span data-lang="nl">Geselecteerd</span><span data-lang="en">Selected</span></span>
+                        <span><span class="cal-legend-dot" style="background:var(--color-primary-light);"></span><span data-lang="nl">Periode</span><span data-lang="en">Period</span></span>
+                    </div>
+                </div>
+                <div class="price-summary" id="priceSummary">
+                    <div class="price-summary-empty" id="priceSummaryEmpty">
+                        <span data-lang="nl">Selecteer uw verblijfsduur voor een prijsopgave</span>
+                        <span data-lang="en">Select your stay dates for a price estimate</span>
+                    </div>
+                    <div id="priceSummaryRows" style="display:none;">
+                        <div class="price-summary-title" data-lang="nl">💰 Prijsoverzicht (schatting)</div>
+                        <div class="price-summary-title" data-lang="en">💰 Price estimate</div>
+                        <div class="price-row" id="priceRowNights"></div>
+                        <div class="price-row" id="priceRowCleaning"></div>
+                        <div class="price-row total" id="priceRowTotal"></div>
+                        <div class="price-note" data-lang="nl">Excl. logeerbelasting en borg (€400). Exacte prijs op aanvraag.</div>
+                        <div class="price-note" data-lang="en">Excl. tourist tax and deposit (€400). Exact price upon request.</div>
+                    </div>
+                </div>
+                <div class="booking-mini">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-lang="nl">Naam *</label><label data-lang="en">Name *</label>
+                            <input type="text" id="aanvraagNaam" placeholder="Uw naam" oninput="updateAanvraagBtn()">
+                        </div>
+                        <div class="form-group">
+                            <label>E-mail *</label>
+                            <input type="email" id="aanvraagEmail" placeholder="uw@email.com" oninput="updateAanvraagBtn()">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-lang="nl">Aantal gasten *</label><label data-lang="en">Number of guests *</label>
+                            <select id="aanvraagGasten" onchange="updateAanvraagBtn()" class="form-select">
+                                <option value="">Selecteer...</option>
+                                <option value="1">1 gast</option>
+                                <option value="2">2 gasten</option>
+                                <option value="3">3 gasten</option>
+                                <option value="4">4 gasten</option>
+                                <option value="5">5 gasten (+€17,50 p.p.p.n.)</option>
+                                <option value="6">6 gasten (+€17,50 p.p.p.n.)</option>
+                                <option value="7">7 gasten (+€17,50 p.p.p.n.)</option>
+                                <option value="8+">8+ gasten (+€17,50 p.p.p.n.)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label data-lang="nl">Telefoon (optioneel)</label><label data-lang="en">Phone (optional)</label>
+                            <input type="tel" id="aanvraagTel" placeholder="+31 6 12345678">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom:12px;">
+                        <label data-lang="nl">Bericht (optioneel)</label><label data-lang="en">Message (optional)</label>
+                        <textarea id="aanvraagBericht" rows="3" placeholder="Speciale wensen, vragen, allergieën..." class="form-textarea"></textarea>
+                    </div>
+                    <!-- OTP verification step (hidden until email verified) -->
+                    <div id="otpStep" style="display:none;margin-bottom:12px;">
+                        <p class="form-hint" style="margin-bottom:8px;" data-lang="nl">📧 We hebben een verificatiecode naar uw e-mailadres gestuurd. Vul de code hieronder in.</p>
+                        <p class="form-hint" style="margin-bottom:8px;" data-lang="en">📧 We sent a verification code to your email address. Enter the code below.</p>
+                        <div style="display:flex;gap:8px;align-items:center;">
+                            <input type="text" id="otpInput" maxlength="6" placeholder="123456" style="width:120px;font-size:20px;letter-spacing:6px;text-align:center;padding:8px;" oninput="onOtpInput()">
+                            <button class="btn-aanvraag" id="btnVerifyOtp" onclick="verifyOtp()" style="width:auto;padding:8px 16px;" disabled>
+                                <span data-lang="nl">Bevestigen</span><span data-lang="en">Confirm</span>
+                            </button>
+                        </div>
+                        <p id="otpError" style="color:#ef4444;font-size:13px;margin-top:6px;display:none;"></p>
+                        <button onclick="requestOtp(true)" style="background:none;border:none;color:#6b7280;font-size:13px;cursor:pointer;margin-top:4px;padding:0;" data-lang="nl">Opnieuw versturen</button>
+                        <button onclick="requestOtp(true)" style="background:none;border:none;color:#6b7280;font-size:13px;cursor:pointer;margin-top:4px;padding:0;" data-lang="en">Resend code</button>
+                    </div>
+
+                    <button class="btn-aanvraag" id="btnAanvraag" disabled onclick="stuurAanvraag()">
+                        ✉️ <span data-lang="nl">Stuur aanvraag</span><span data-lang="en">Send request</span>
+                    </button>
+                    <button class="btn-whatsapp-mini" onclick="stuurWhatsApp()">
+                        💬 <span data-lang="nl">Of direct via WhatsApp</span><span data-lang="en">Or send via WhatsApp</span>
+                    </button>
+                    <p class="form-hint" data-lang="nl">Vul datum, gasten, naam en e-mail in om de aanvraag te versturen. Uw gastvrouw reageert binnen enkele uren.</p>
+                    <p class="form-hint" data-lang="en">Fill in dates, guests, name and email to send your request. Your hostess responds within a few hours.</p>
+                </div>
+            </div>
+
+            <!-- TAB 2: Photos -->
+            <div class="vmodal-tab-content" id="tab-photos">
+                <div class="gallery-wrap" id="galleryWrap">
+                    <img class="gallery-img active" id="galleryMainImg" src="" alt="">
+                    <button class="gallery-nav-btn gallery-prev" onclick="galleryNav(-1)">‹</button>
+                    <button class="gallery-nav-btn gallery-next" onclick="galleryNav(1)">›</button>
+                    <span class="gallery-counter" id="galleryCounter">1 / 1</span>
+                </div>
+                <div class="gallery-thumbs" id="galleryThumbs"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- LEGAL MODAL -->
+<div class="legal-overlay" id="legalModal" onclick="closeLegalModal(event)">
+    <div class="legal-panel">
+        <button class="legal-close" onclick="document.getElementById('legalModal').classList.remove('active');document.body.style.overflow=''">✕</button>
+        <div id="privacyContent">
+            <h2 style="margin-bottom:20px;" data-lang="nl">Privacybeleid</h2>
+            <h2 style="margin-bottom:20px;" data-lang="en">Privacy Policy</h2>
+            <div data-lang="nl">
+                <p><strong>RentaVillaCuracao</strong> respecteert uw privacy en verwerkt persoonsgegevens uitsluitend voor het verwerken van boekingen en het beantwoorden van vragen.</p>
+                <h4>Welke gegevens verzamelen wij?</h4>
+                <p>Naam, e-mailadres, telefoonnummer en reisdata die u zelf aan ons verstrekt via het contactformulier of per e-mail/WhatsApp.</p>
+                <h4>Waarvoor gebruiken wij uw gegevens?</h4>
+                <p>Uitsluitend voor de verwerking van uw reservering. Uw gegevens worden nooit verkocht of gedeeld met derden voor marketingdoeleinden.</p>
+                <h4>Contact</h4>
+                <p>RentaVillaCuracao · rentavillacuracao@gmail.com</p>
+            </div>
+            <div data-lang="en">
+                <p><strong>RentaVillaCuracao</strong> respects your privacy and processes personal data solely for processing bookings and answering enquiries.</p>
+                <h4>What data do we collect?</h4>
+                <p>Name, email address, phone number and travel dates you provide via the contact form or by email/WhatsApp.</p>
+                <h4>How do we use your data?</h4>
+                <p>Solely for processing your reservation. Your data is never sold or shared with third parties for marketing purposes.</p>
+                <h4>Contact</h4>
+                <p>RentaVillaCuracao · rentavillacuracao@gmail.com</p>
+            </div>
+        </div>
+        <div id="termsContent" style="display:none;">
+            <h2 style="margin-bottom:20px;" data-lang="nl">Algemene Voorwaarden</h2>
+            <h2 style="margin-bottom:20px;" data-lang="en">Terms &amp; Conditions</h2>
+            <div data-lang="nl">
+                <h4>Reserveren</h4>
+                <p>Reservering geschiedt per e-mail. Definitief na ontvangst van 50% aanbetaling. Resterende 50% uiterlijk 6 weken voor aankomst.</p>
+                <h4>Borgsom</h4>
+                <p>De borgsom bedraagt €400,00 per villa. Retour na verblijf minus elektra en eventuele schade.</p>
+                <h4>Annulering</h4>
+                <p>Tot 3 maanden voor aanvang: volledige aanbetaling retour. Van 3 maanden tot 6 weken: 50% retour. Binnen 6 weken: geen terugbetaling.</p>
+            </div>
+            <div data-lang="en">
+                <h4>Reservations</h4>
+                <p>Reservations are made by email. Final upon receipt of 50% deposit. Remaining 50% due no later than 6 weeks before arrival.</p>
+                <h4>Security deposit</h4>
+                <p>Security deposit is €400.00 per villa. Refunded after stay minus electricity costs and any damage.</p>
+                <h4>Cancellation</h4>
+                <p>More than 3 months: full refund. Between 3 months and 6 weeks: 50% refund. Within 6 weeks: no refund.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Leaflet JS via cdnjs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<!-- Site scripts -->
+<script src="js/main.js"></script>
+
+</body>
+</html>
