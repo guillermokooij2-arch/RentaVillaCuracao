@@ -808,8 +808,12 @@ function fetchIcal(url, villaId) {
             })
             .then(function(data) {
                 if (data && data.ok && Array.isArray(data.blockedDates)) {
-                    calState.blockedDates = data.blockedDates;
-                    renderCalendar();
+                    if (data.blockedDates.length > 0 || !url) {
+                        calState.blockedDates = data.blockedDates;
+                        renderCalendar();
+                    } else {
+                        fetchLocalIcal(url);
+                    }
                 } else if (url) {
                     fetchLocalIcal(url);
                 }

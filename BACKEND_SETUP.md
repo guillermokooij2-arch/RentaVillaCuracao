@@ -99,6 +99,32 @@ where slug = 'villa-abdo';
 
 Repeat for Booking.com, Airbnb, Google Calendar, or other iCal sources.
 
+For the currently committed fallback files, you can also use the deployed site URLs as sources after Netlify is live:
+
+```sql
+insert into public.calendar_sources (property_id, source_name, ical_url)
+select id, 'Fallback file', 'https://YOUR-NETLIFY-SITE.netlify.app/calendars/kas-granjero.ics'
+from public.properties
+where slug = 'kas-granjero'
+and not exists (
+  select 1 from public.calendar_sources
+  where source_name = 'Fallback file'
+  and ical_url = 'https://YOUR-NETLIFY-SITE.netlify.app/calendars/kas-granjero.ics'
+);
+
+insert into public.calendar_sources (property_id, source_name, ical_url)
+select id, 'Fallback file', 'https://YOUR-NETLIFY-SITE.netlify.app/calendars/casa-prikichi.ics'
+from public.properties
+where slug = 'casa-prikichi'
+and not exists (
+  select 1 from public.calendar_sources
+  where source_name = 'Fallback file'
+  and ical_url = 'https://YOUR-NETLIFY-SITE.netlify.app/calendars/casa-prikichi.ics'
+);
+```
+
+For true automatic updates, use the original external iCal URL from Micazu, Airbnb, Booking.com, Google Calendar, or another booking calendar instead of a committed local file. The `sync-calendars` function reads `calendar_sources`, imports events into `availability_blocks`, and `get-availability` serves those blocked dates to the website.
+
 Current villa slugs:
 
 ```txt
