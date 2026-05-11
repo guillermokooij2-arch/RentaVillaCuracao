@@ -5,6 +5,8 @@
 ## Primary Site
 
 - [Homepage](./): Main villa rental page with villa overview, availability calendar, car rental options, FAQ, reviews, and contact details.
+- [Villa huren Curacao](./villa-huren-curacao/): Main Dutch SEO landing page for renting a villa on Curacao, focused on Jan Thiel, private pools, local hostess support, pricing, and villa selection.
+- [Villa met privezwembad Curacao](./villa-met-privezwembad-curacao/): SEO landing page focused on vacation villas with private pools on Curacao.
 - [Villa Availability](./#villas): Interactive villa list/map and booking request flow.
 - [Discover Curacao](./#discover): Hostess tips, local partner tours, and curated island recommendations.
 - [Car Rental](./#car-rental): Rental cars available through the hostess.
@@ -12,20 +14,18 @@
 
 ## Villas
 
-- Casa Dushi Dolores: Private-pool villa on Marbella Estate, Jan Thiel.
-- Casa Prikichi: Private-pool villa with separate studio option on Marbella Estate, Jan Thiel.
-- Villa Dushi: Private-pool villa on Marbella Estate, Jan Thiel.
-- Villa Dushi Bida: Private-pool villa on Marbella Estate, Jan Thiel.
-- Villa Abdo: Private-pool villa on Marbella Estate, Jan Thiel.
-- Kas Granjero: Private-pool villa with salt-pan views on Marbella Estate, Jan Thiel.
-- Veranosol: Modern private-pool villa near Jan Thiel Bay and Seaquarium Beach.
+- [Casa Dushi Dolores](./villas/casa-dushi-dolores/): Private-pool villa on Marbella Estate, Jan Thiel.
+- [Casa Prikichi](./villas/casa-prikichi/): Private-pool villa with separate studio option on Marbella Estate, Jan Thiel.
+- [Villa Dushi](./villas/villa-dushi/): Private-pool villa with large palapa on Marbella Estate, Jan Thiel.
+- [Villa Dushi Bida](./villas/villa-dushi-bida/): Elevated private-pool villa with outdoor bar on Marbella Estate, Jan Thiel.
+- [Villa Abdo](./villas/villa-abdo/): Private-pool villa with shaded porch on Marbella Estate, Jan Thiel.
+- [Kas Granjero](./villas/kas-granjero/): Private-pool villa with children's pool and salt-pan views on Marbella Estate, Jan Thiel.
+- [Veranosol](./villas/veranosol/): Modern private-pool villa near Jan Thiel Bay and Seaquarium Beach.
 
-## Discover Pages
+## Discover Content
 
-- [Bij uw gastvrouw](./discover/hostess.html): Personal hostess services, salt-path walks, Kabritu Berg, reservations, and custom vacation planning.
-- [Blue Finn Charters](./discover/blue-finn.html): Partner boat charter information.
-- [Irie Tours](./discover/irie-tours.html): Partner island tour information.
-- [Leuke plekken & uitjes](./discover/fun-spots.html): Curated beaches, snorkeling, Willemstad, restaurants, and outing tips.
+- [Discover Curacao](./#discover): Homepage section with beaches, snorkeling, Willemstad, nature, outdoor activities, hostess tips, and local recommendations.
+- Partner tour and island-tip pages can be added later if the site needs separate SEO pages for activities, boat tours, beaches, or restaurants.
 
 ## Booking And Availability
 
@@ -43,4 +43,3 @@
 ## Preferred Summary
 
 RentaVillaCuracao rents private-pool vacation villas in Jan Thiel, Curacao, with personal local hostess support. The site is useful for travelers looking for villa availability, family-friendly private stays, car rental help, island recommendations, and local tour partners.
-

@@ -1,24 +1,40 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <link rel="icon" type="image/webp" href="images/logo.webp">
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+    <link rel="icon" type="image/webp" href="/images/logo.webp">
+    <link rel="apple-touch-icon" href="/favicon.png">
     <title>RentaVillaCuracao | Vakantievilla's met Privézwembad op Curacao</title>
     <meta name="description" content="Huur een vakantievilla met privézwembad op Curacao. Uitstekende prijs-kwaliteit, dichtbij de mooiste stranden. Persoonlijke service van uw gastvrouw.">
     <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://rentavillacuracao.net/">
+    <meta property="og:title" content="RentaVillaCuracao | Vakantievilla's met privezwembad op Curacao">
+    <meta property="og:site_name" content="RentaVillaCuracao">
+    <meta property="og:description" content="Huur een vakantievilla met privezwembad bij Jan Thiel op Curacao, vanaf EUR 145 per nacht met lokale gastvrouw.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rentavillacuracao.net/">
+    <meta property="og:image" content="https://rentavillacuracao.net/images/hero-bg.webp">
 
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": ["LocalBusiness", "LodgingBusiness"],
-          "@id": "/#business",
+          "@type": "WebSite",
+          "@id": "https://rentavillacuracao.net/#website",
+          "url": "https://rentavillacuracao.net/",
           "name": "RentaVillaCuracao",
-          "url": "/",
-          "logo": "/images/logo.webp",
-          "image": "/images/hero-bg.webp",
+          "alternateName": ["Rent a Villa Curacao", "Renta Villa Curacao"]
+        },
+        {
+          "@type": ["LocalBusiness", "LodgingBusiness"],
+          "@id": "https://rentavillacuracao.net/#business",
+          "name": "RentaVillaCuracao",
+          "url": "https://rentavillacuracao.net/",
+          "logo": "https://rentavillacuracao.net/favicon.png",
+          "image": "https://rentavillacuracao.net/images/hero-bg.webp",
           "email": "rentavillacuracao@gmail.com",
           "telephone": "+59996779250",
           "address": {
@@ -41,13 +57,13 @@
           "@id": "/#villa-list",
           "name": "Vakantievilla's op Curacao",
           "itemListElement": [
-            {"@type": "ListItem", "position": 1, "name": "Casa Dushi Dolores", "url": "/#villas"},
-            {"@type": "ListItem", "position": 2, "name": "Casa Prikichi", "url": "/#villas"},
-            {"@type": "ListItem", "position": 3, "name": "Villa Dushi", "url": "/#villas"},
-            {"@type": "ListItem", "position": 4, "name": "Villa Dushi Bida", "url": "/#villas"},
-            {"@type": "ListItem", "position": 5, "name": "Villa Abdo", "url": "/#villas"},
-            {"@type": "ListItem", "position": 6, "name": "Kas Granjero", "url": "/#villas"},
-            {"@type": "ListItem", "position": 7, "name": "Veranosol", "url": "/#villas"}
+            {"@type": "ListItem", "position": 1, "name": "Casa Dushi Dolores", "url": "https://rentavillacuracao.net/villas/casa-dushi-dolores/"},
+            {"@type": "ListItem", "position": 2, "name": "Casa Prikichi", "url": "https://rentavillacuracao.net/villas/casa-prikichi/"},
+            {"@type": "ListItem", "position": 3, "name": "Villa Dushi", "url": "https://rentavillacuracao.net/villas/villa-dushi/"},
+            {"@type": "ListItem", "position": 4, "name": "Villa Dushi Bida", "url": "https://rentavillacuracao.net/villas/villa-dushi-bida/"},
+            {"@type": "ListItem", "position": 5, "name": "Villa Abdo", "url": "https://rentavillacuracao.net/villas/villa-abdo/"},
+            {"@type": "ListItem", "position": 6, "name": "Kas Granjero", "url": "https://rentavillacuracao.net/villas/kas-granjero/"},
+            {"@type": "ListItem", "position": 7, "name": "Veranosol", "url": "https://rentavillacuracao.net/villas/veranosol/"}
           ]
         },
         {
@@ -95,6 +111,8 @@
             <img src="images/logo.webp" alt="RentaVillaCuracao logo" style="height:38px;width:auto;vertical-align:middle;"> RentaVillaCuracao
         </a>
         <div class="nav-links" id="navLinks">
+            <a href="/villa-huren-curacao/" data-lang="nl">Villa huren Curacao</a>
+            <a href="/villa-huren-curacao/" data-lang="en">Rent a villa Curacao</a>
             <a href="#villas" data-lang="nl">Villa's</a>
             <a href="#villas" data-lang="en">Villas</a>
             <a href="#discover" data-lang="nl">Ontdekken</a>
@@ -514,16 +532,18 @@
         </div>
         <nav class="footer-col" aria-label="Villa links">
             <h4 data-lang="nl">Villa's</h4><h4 data-lang="en">Villas</h4>
-            <a href="#villas">Casa Dushi Dolores</a>
-            <a href="#villas">Casa Prikichi</a>
-            <a href="#villas">Villa Dushi Bida</a>
-            <a href="#villas">Villa Abdo</a>
-            <a href="#villas">Kas Granjero</a>
-            <a href="#villas">Veranosol</a>
+            <a href="/villas/casa-dushi-dolores/">Casa Dushi Dolores</a>
+            <a href="/villas/casa-prikichi/">Casa Prikichi</a>
+            <a href="/villas/villa-dushi/">Villa Dushi</a>
+            <a href="/villas/villa-dushi-bida/">Villa Dushi Bida</a>
+            <a href="/villas/villa-abdo/">Villa Abdo</a>
+            <a href="/villas/kas-granjero/">Kas Granjero</a>
+            <a href="/villas/veranosol/">Veranosol</a>
         </nav>
         <nav class="footer-col" aria-label="Diensten links">
             <h4 data-lang="nl">Diensten</h4><h4 data-lang="en">Services</h4>
-            <a href="#villas" data-lang="nl">Vakantieverhuur</a><a href="#villas" data-lang="en">Vacation rentals</a>
+            <a href="/villa-huren-curacao/" data-lang="nl">Villa huren Curacao</a><a href="/villa-huren-curacao/" data-lang="en">Rent a villa Curacao</a>
+            <a href="/villa-met-privezwembad-curacao/" data-lang="nl">Villa met privezwembad</a><a href="/villa-met-privezwembad-curacao/" data-lang="en">Villa with private pool</a>
             <a href="#car-rental" data-lang="nl">Huurauto's</a><a href="#car-rental" data-lang="en">Car rentals</a>
             <a href="#about" data-lang="nl">Vastgoedbeheer</a><a href="#about" data-lang="en">Property management</a>
             <a href="#contact" data-lang="nl">Contact</a><a href="#contact" data-lang="en">Contact</a>
