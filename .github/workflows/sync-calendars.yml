@@ -1,7 +1,7 @@
 name: Sync Calendars
 
 on:
-  schedule:
+  sc
     - cron: '0 */3 * * *'  # every 3 hours
   workflow_dispatch:        # allow manual trigger from GitHub UI
 
