@@ -46,11 +46,11 @@ Deno.serve(async (req) => {
 
   const supabaseUrl = Deno.env.get("SUPABASE_URL");
   const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  const ownerEmail = Deno.env.get("OWNER_EMAIL") || "rentavillacuracao@gmail.com";
+  const ownerEmail = Deno.env.get("OWNER_EMAIL");
   const fromEmail = Deno.env.get("FROM_EMAIL") || "RentaVillaCuracao <bookings@rentavillacuracao.com>";
   const resendApiKey = Deno.env.get("RESEND_API_KEY");
 
-  if (!supabaseUrl || !serviceRoleKey) {
+  if (!supabaseUrl || !serviceRoleKey || !ownerEmail) {
     return errorResponse("Supabase environment is not configured", 500);
   }
   if (!resendApiKey) {

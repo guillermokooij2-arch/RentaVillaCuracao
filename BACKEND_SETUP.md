@@ -2,7 +2,7 @@
 
 This project now has a Supabase + Resend backend foundation for booking requests, contact emails, and availability sync.
 
-Important: rotate the Resend API key that was pasted into chat. Add the new key as a Supabase secret. Do not commit it to this repo.
+Important: rotate any Resend API key that may have been exposed outside Resend/Supabase. Add the new key as a Supabase secret. Do not commit it to this repo.
 
 ## What Was Added
 
@@ -34,13 +34,13 @@ Important: rotate the Resend API key that was pasted into chat. Add the new key 
 
 ## Public Frontend Config
 
-The frontend uses this public Supabase Functions URL in `js/main.js`:
+The frontend uses the public Supabase Functions URL in `js/main.js`:
 
 ```js
-supabaseFunctionsUrl: 'https://slscbdrmhzhopvpvcome.supabase.co/functions/v1'
+supabaseFunctionsUrl: 'https://YOUR_PROJECT_REF.supabase.co/functions/v1'
 ```
 
-This is safe to expose. Private keys are only used inside Supabase Edge Functions.
+This URL and the Supabase anon key are public identifiers, not secrets. They are safe to expose only when Row Level Security is enabled and private actions run through Edge Functions with server-side validation. Private keys are only used inside Supabase Edge Functions.
 
 ## Secrets To Add In Supabase
 
@@ -52,7 +52,7 @@ Add:
 
 ```txt
 RESEND_API_KEY=your_rotated_resend_key
-OWNER_EMAIL=rentavillacuracao@gmail.com
+OWNER_EMAIL=owner@example.com
 FROM_EMAIL=RentaVillaCuracao <bookings@yourdomain.com>
 SYNC_SECRET=choose-a-long-random-string
 ```
@@ -67,7 +67,7 @@ From this project folder:
 
 ```bash
 supabase login
-supabase link --project-ref slscbdrmhzhopvpvcome
+supabase link --project-ref YOUR_PROJECT_REF
 supabase db push
 supabase functions deploy submit-booking-request
 supabase functions deploy submit-contact-message
@@ -81,10 +81,12 @@ Then set secrets:
 
 ```bash
 supabase secrets set RESEND_API_KEY=your_rotated_resend_key
-supabase secrets set OWNER_EMAIL=rentavillacuracao@gmail.com
+supabase secrets set OWNER_EMAIL=owner@example.com
 supabase secrets set "FROM_EMAIL=RentaVillaCuracao <bookings@yourdomain.com>"
 supabase secrets set SYNC_SECRET=choose-a-long-random-string
 ```
+
+Do not leave the example email in place. Set `OWNER_EMAIL` to the private owner inbox directly in Supabase secrets.
 
 ## Add Villa iCal Feeds
 
@@ -142,20 +144,20 @@ veranosol
 After adding at least one real iCal feed:
 
 ```bash
-curl -X POST "https://slscbdrmhzhopvpvcome.supabase.co/functions/v1/sync-calendars" \
+curl -X POST "https://YOUR_PROJECT_REF.supabase.co/functions/v1/sync-calendars" \
   -H "x-sync-secret: your-sync-secret"
 ```
 
 Then test availability:
 
 ```bash
-curl "https://slscbdrmhzhopvpvcome.supabase.co/functions/v1/get-availability?villa=villa-abdo"
+curl "https://YOUR_PROJECT_REF.supabase.co/functions/v1/get-availability?villa=villa-abdo"
 ```
 
 ## Booking Request Test
 
 ```bash
-curl -X POST "https://slscbdrmhzhopvpvcome.supabase.co/functions/v1/submit-booking-request" \
+curl -X POST "https://YOUR_PROJECT_REF.supabase.co/functions/v1/submit-booking-request" \
   -H "Content-Type: application/json" \
   -d '{
     "villaSlug": "villa-abdo",
@@ -173,6 +175,7 @@ curl -X POST "https://slscbdrmhzhopvpvcome.supabase.co/functions/v1/submit-booki
 ## Production Notes
 
 - Treat site bookings as requests, not instant confirmed bookings.
+- Keep Row Level Security enabled on every table. `booking_requests`, `contact_messages`, `email_logs`, and `otp_codes` should not have anon read policies.
 - iCal can lag, so the backend re-check is helpful but not a full channel-manager replacement.
 - Resend sender domain should be verified with SPF, DKIM, and DMARC for better delivery.
 - Later, add an admin dashboard for request status, manual blocked dates, and email history.
