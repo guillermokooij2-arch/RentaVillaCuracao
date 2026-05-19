@@ -116,7 +116,6 @@ var HOUSES_DATA = {
 
 var CONFIG = {
     supabaseFunctionsUrl: 'https://slscbdrmhzhopvpvcome.supabase.co/functions/v1',
-    supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNsc2NiZHJtaHpob3B2cHZjb21lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc3NTAxNTQsImV4cCI6MjA5MzMyNjE1NH0.66fOcX8w_NO87XYY2gtmO5_f4yu3gYD2eObV2oq63UU',
     whatsappNumber: '59996779250',
     ownerEmail: 'rentavillacuracao@gmail.com'
 };
@@ -128,9 +127,7 @@ function backendEndpoint(name) {
 
 function backendHeaders(extra) {
     var h = {
-        'Content-Type': 'application/json',
-        'apikey': CONFIG.supabaseAnonKey,
-        'Authorization': 'Bearer ' + CONFIG.supabaseAnonKey
+        'Content-Type': 'application/json'
     };
     return Object.assign(h, extra || {});
 }
