@@ -128,7 +128,7 @@
 ### 1. Supabase + Resend backend
 Booking requests, contact messages, email delivery, and availability sync now use Supabase Edge Functions and Resend instead of EmailJS.
 
-See `BACKEND_SETUP.md` for database setup, function deployment, secrets, and test commands.
+Backend secrets and deployment notes should be kept outside the public repo, for example in `BACKEND_SETUP.local.md`.
 
 ### 2. iCal Calendar Sync (availability)
 For production, add your Airbnb, Booking.com, or Google Calendar iCal URLs to the Supabase `calendar_sources` table and run the `sync-calendars` function.
