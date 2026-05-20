@@ -8,6 +8,7 @@ type ContactPayload = {
   language?: string;
   sourceUrl?: string;
   website?: string;
+  otpToken?: string;
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -36,12 +37,16 @@ Deno.serve(async (req) => {
   const email = cleanText(payload.email || "", 180).toLowerCase();
   const message = cleanText(payload.message || "", 2500);
   const language = payload.language === "en" ? "en" : "nl";
+  const otpToken = cleanText(payload.otpToken || "", 40);
 
   if (!name || !email || !message) {
     return errorResponse("Missing required contact fields");
   }
   if (!EMAIL_RE.test(email)) {
     return errorResponse("Invalid email address");
+  }
+  if (!otpToken) {
+    return errorResponse("Email verification required", 403);
   }
 
   const supabaseUrl = Deno.env.get("SUPABASE_URL");
@@ -61,6 +66,36 @@ Deno.serve(async (req) => {
     auth: { persistSession: false },
   });
 
+  const ipHashSalt = Deno.env.get("IP_HASH_SALT") || serviceRoleKey;
+  const ipHash = await hashIpAddress(getClientIp(req), ipHashSalt);
+  const rateLimitWindowStart = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+  const { count, error: rateLimitError } = await supabase
+    .from("contact_messages")
+    .select("id", { count: "exact", head: true })
+    .eq("ip_hash", ipHash)
+    .gte("created_at", rateLimitWindowStart);
+
+  if (rateLimitError) {
+    return errorResponse("Could not verify request limit", 500, rateLimitError.message);
+  }
+  if ((count ?? 0) >= 5) {
+    return errorResponse("Too many requests", 429);
+  }
+
+  const { data: otpRow, error: otpError } = await supabase
+    .from("otp_codes")
+    .select("id")
+    .eq("email", email)
+    .eq("verification_token", otpToken)
+    .eq("used", true)
+    .gte("token_expires_at", new Date().toISOString())
+    .limit(1)
+    .single<{ id: string }>();
+
+  if (otpError || !otpRow) {
+    return errorResponse("Email verification expired or invalid. Please verify again.", 403);
+  }
+
   const { data: contact, error: contactError } = await supabase
     .from("contact_messages")
     .insert({
@@ -70,6 +105,7 @@ Deno.serve(async (req) => {
       language,
       source_url: cleanText(payload.sourceUrl || req.headers.get("referer") || "", 500) || null,
       user_agent: cleanText(req.headers.get("user-agent") || "", 500) || null,
+      ip_hash: ipHash,
     })
     .select("id")
     .single<{ id: string }>();
@@ -77,6 +113,8 @@ Deno.serve(async (req) => {
   if (contactError || !contact) {
     return errorResponse("Could not save contact message", 500, contactError?.message);
   }
+
+  await consumeOtpToken(supabase, otpRow.id);
 
   const subject = "Nieuw contactbericht via RentaVillaCuracao";
   const result = await sendEmail({
@@ -137,6 +175,33 @@ Deno.serve(async (req) => {
 
 function cleanText(value: string, maxLength: number): string {
   return value.replace(/\s+/g, " ").trim().slice(0, maxLength);
+}
+
+function getClientIp(req: Request): string {
+  const forwardedFor = req.headers.get("x-forwarded-for");
+  const rawIp = forwardedFor?.split(",")[0]
+    || req.headers.get("cf-connecting-ip")
+    || req.headers.get("x-real-ip")
+    || "unknown";
+  return cleanText(rawIp, 80) || "unknown";
+}
+
+async function hashIpAddress(ipAddress: string, salt: string): Promise<string> {
+  const input = new TextEncoder().encode(`${salt}:${ipAddress}`);
+  const hash = await crypto.subtle.digest("SHA-256", input);
+  return Array.from(new Uint8Array(hash))
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+async function consumeOtpToken(supabase: ReturnType<typeof createClient>, otpId: string) {
+  await supabase
+    .from("otp_codes")
+    .update({
+      verification_token: null,
+      token_expires_at: new Date().toISOString(),
+    })
+    .eq("id", otpId);
 }
 
 async function sendEmail(input: {

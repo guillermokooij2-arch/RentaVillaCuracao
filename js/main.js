@@ -147,7 +147,9 @@ function parseBackendResponse(response) {
             if (data.details && typeof data.details === 'string') {
                 message += ': ' + data.details;
             }
-            throw new Error(message);
+            var error = new Error(message);
+            error.status = response.status;
+            throw error;
         }
         return data;
     });
@@ -1022,6 +1024,9 @@ function updatePriceSummary() {
    ============================================================ */
 var otpVerifiedToken = null;
 var otpVerifiedEmail = null;
+var contactOtpVerifiedToken = null;
+var contactOtpVerifiedEmail = null;
+var contactOtpPendingSubmit = false;
 
 function updateAanvraagBtn() {
     var naam = document.getElementById('aanvraagNaam').value.trim();
@@ -1304,39 +1309,164 @@ function lightboxClickOutside(e) {
 /* ============================================================
    CONTACT FORM
    ============================================================ */
-function sendContactForm(e) {
-    e.preventDefault();
-    var btn = document.getElementById('contactSubmitBtn');
+function getContactFormData() {
     var form = document.getElementById('contactForm');
     var fd = new FormData(form);
-    var data = { name: fd.get('name'), email: fd.get('email'), message: fd.get('message'), language: currentLang, sourceUrl: window.location.href };
+    return {
+        form: form,
+        name: (fd.get('name') || '').toString().trim(),
+        email: (fd.get('email') || '').toString().trim().toLowerCase(),
+        message: (fd.get('message') || '').toString().trim(),
+        website: (fd.get('website') || '').toString(),
+        language: currentLang,
+        sourceUrl: window.location.href
+    };
+}
+
+function resetContactOtpIfEmailChanged() {
+    var data = getContactFormData();
+    if (contactOtpVerifiedEmail && data.email !== contactOtpVerifiedEmail) {
+        contactOtpVerifiedToken = null;
+        contactOtpVerifiedEmail = null;
+        document.getElementById('contactOtpStep').style.display = 'none';
+    }
+}
+
+function onContactOtpInput() {
+    var val = document.getElementById('contactOtpInput').value.trim();
+    document.getElementById('contactVerifyOtpBtn').disabled = val.length !== 6;
+}
+
+function requestContactOtp(isResend) {
+    var data = getContactFormData();
+    var endpoint = backendEndpoint('send-otp');
+    var btn = document.getElementById('contactSubmitBtn');
     var isNL = currentLang === 'nl';
+
+    if (!endpoint) return;
+    if (!data.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+        data.form.reportValidity();
+        return;
+    }
+
+    btn.disabled = true;
+    btn.classList.add('sending');
+    btn.textContent = isNL ? 'Code versturen...' : 'Sending code...';
+
+    fetch(endpoint, {
+        method: 'POST',
+        headers: backendHeaders(),
+        body: JSON.stringify({ email: data.email, language: currentLang, website: data.website, purpose: 'contact' })
+    })
+        .then(parseBackendResponse)
+        .then(function() {
+            document.getElementById('contactOtpStep').style.display = 'block';
+            document.getElementById('contactOtpInput').value = '';
+            document.getElementById('contactOtpError').style.display = 'none';
+            document.getElementById('contactVerifyOtpBtn').disabled = true;
+            btn.disabled = true;
+            btn.classList.remove('sending');
+            btn.textContent = isNL ? 'Code verstuurd - vul in hierboven' : 'Code sent - enter above';
+        })
+        .catch(function(err) {
+            btn.disabled = false;
+            btn.classList.remove('sending');
+            btn.innerHTML = isNL ? '✉️ Verstuur bericht' : '✉️ Send message';
+            if (!isResend) {
+                alert(err.message || (isNL ? 'Kon code niet versturen.' : 'Could not send code.'));
+            }
+        });
+}
+
+function verifyContactOtp() {
+    var data = getContactFormData();
+    var code = document.getElementById('contactOtpInput').value.trim();
+    var endpoint = backendEndpoint('verify-otp');
+    var btn = document.getElementById('contactVerifyOtpBtn');
+    var isNL = currentLang === 'nl';
+    if (!endpoint) return;
+
+    btn.disabled = true;
+    btn.innerHTML = '<span data-lang="nl">Bezig...</span><span data-lang="en">Checking...</span>';
+
+    fetch(endpoint, {
+        method: 'POST',
+        headers: backendHeaders(),
+        body: JSON.stringify({ email: data.email, code: code })
+    })
+        .then(parseBackendResponse)
+        .then(function(payload) {
+            if (!payload.token) throw new Error('Invalid code');
+            contactOtpVerifiedToken = payload.token;
+            contactOtpVerifiedEmail = data.email;
+            document.getElementById('contactOtpStep').style.display = 'none';
+            document.getElementById('contactSubmitBtn').disabled = false;
+            if (contactOtpPendingSubmit) {
+                sendContactForm(null);
+            }
+        })
+        .catch(function(err) {
+            var errEl = document.getElementById('contactOtpError');
+            errEl.textContent = err.message || (isNL ? 'Ongeldige code.' : 'Invalid code.');
+            errEl.style.display = 'block';
+            btn.disabled = false;
+            btn.innerHTML = '<span data-lang="nl">Bevestigen</span><span data-lang="en">Confirm</span>';
+        });
+}
+
+function sendContactForm(e) {
+    if (e) e.preventDefault();
+    var btn = document.getElementById('contactSubmitBtn');
+    var data = getContactFormData();
+    var form = data.form;
+    var isNL = currentLang === 'nl';
+    var endpoint = backendEndpoint('submit-contact-message');
+
+    resetContactOtpIfEmailChanged();
+    if (endpoint && (!contactOtpVerifiedToken || contactOtpVerifiedEmail !== data.email)) {
+        contactOtpPendingSubmit = true;
+        requestContactOtp(false);
+        return;
+    }
+
+    data.otpToken = contactOtpVerifiedToken;
     btn.classList.add('sending');
 
-    var endpoint = backendEndpoint('submit-contact-message');
     if (endpoint) {
         fetch(endpoint, {
             method: 'POST',
             headers: backendHeaders(),
             body: JSON.stringify(data)
         })
-            .then(function(r) {
-                return r.json().then(function(payload) {
-                    if (!r.ok || !payload.ok) throw new Error(payload && payload.error ? payload.error : 'Request failed');
-                    return payload;
-                });
-            })
+            .then(parseBackendResponse)
             .then(function() {
                 btn.classList.remove('sending'); btn.classList.add('sent');
                 btn.textContent = isNL ? '✅ Bericht verstuurd!' : '✅ Message sent!';
                 form.reset();
+                contactOtpPendingSubmit = false;
+                contactOtpVerifiedToken = null;
+                contactOtpVerifiedEmail = null;
+                document.getElementById('contactOtpStep').style.display = 'none';
                 setTimeout(function() { btn.classList.remove('sent'); btn.innerHTML = isNL ? '✉️ Verstuur bericht' : '✉️ Send message'; }, 4000);
             })
-            .catch(function() {
+            .catch(function(err) {
+                btn.classList.remove('sending');
+                contactOtpPendingSubmit = false;
+                if (err && (err.status === 400 || err.status === 403 || err.status === 429)) {
+                    alert(err.message || (isNL ? 'Het bericht kon niet worden verstuurd.' : 'The message could not be sent.'));
+                    if (err.status === 403) {
+                        contactOtpVerifiedToken = null;
+                        contactOtpVerifiedEmail = null;
+                        document.getElementById('contactOtpInput').value = '';
+                        document.getElementById('contactVerifyOtpBtn').disabled = true;
+                        document.getElementById('contactVerifyOtpBtn').innerHTML = '<span data-lang="nl">Bevestigen</span><span data-lang="en">Confirm</span>';
+                        document.getElementById('contactOtpStep').style.display = 'block';
+                    }
+                    return;
+                }
                 var s = encodeURIComponent('Contact via RentaVillaCuracao');
                 var b = encodeURIComponent('Naam: ' + data.name + '\nE-mail: ' + data.email + '\n\n' + data.message);
                 window.location.href = 'mailto:' + CONFIG.ownerEmail + '?subject=' + s + '&body=' + b;
-                btn.classList.remove('sending');
             });
     } else {
         var s = encodeURIComponent('Contact via RentaVillaCuracao');

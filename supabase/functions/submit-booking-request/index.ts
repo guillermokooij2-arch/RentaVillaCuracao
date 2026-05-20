@@ -91,6 +91,35 @@ Deno.serve(async (req) => {
     auth: { persistSession: false },
   });
 
+  const ipHashSalt = Deno.env.get("IP_HASH_SALT") || serviceRoleKey;
+  const ipHash = await hashIpAddress(getClientIp(req), ipHashSalt);
+  const rateLimitWindowStart = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+  const { count: ipCount, error: ipRateLimitError } = await supabase
+    .from("booking_requests")
+    .select("id", { count: "exact", head: true })
+    .eq("ip_hash", ipHash)
+    .gte("created_at", rateLimitWindowStart);
+
+  if (ipRateLimitError) {
+    return errorResponse("Could not verify request limit", 500, ipRateLimitError.message);
+  }
+  if ((ipCount ?? 0) >= 5) {
+    return errorResponse("Too many booking requests. Please wait before sending another request.", 429);
+  }
+
+  const { count: emailCount, error: emailRateLimitError } = await supabase
+    .from("booking_requests")
+    .select("id", { count: "exact", head: true })
+    .eq("guest_email", email)
+    .gte("created_at", rateLimitWindowStart);
+
+  if (emailRateLimitError) {
+    return errorResponse("Could not verify request limit", 500, emailRateLimitError.message);
+  }
+  if ((emailCount ?? 0) >= 3) {
+    return errorResponse("Too many booking requests for this email. Please wait before sending another request.", 429);
+  }
+
   // Verify OTP token belongs to this email and is still valid
   const { data: otpRow, error: otpError } = await supabase
     .from("otp_codes")
@@ -154,6 +183,7 @@ Deno.serve(async (req) => {
       language,
       source_url: cleanText(payload.sourceUrl || req.headers.get("referer") || "", 500) || null,
       user_agent: cleanText(req.headers.get("user-agent") || "", 500) || null,
+      ip_hash: ipHash,
     })
     .select("id")
     .single<{ id: string }>();
@@ -161,6 +191,8 @@ Deno.serve(async (req) => {
   if (bookingError || !booking) {
     return errorResponse("Could not save booking request", 500, bookingError?.message);
   }
+
+  await consumeOtpToken(supabase, otpRow.id);
 
   const ownerSubject = `Nieuwe boekingsaanvraag: ${property.name}`;
   const guestSubject = language === "en"
@@ -243,6 +275,33 @@ function diffDays(start: string, end: string): number {
   const startMs = Date.parse(`${start}T00:00:00Z`);
   const endMs = Date.parse(`${end}T00:00:00Z`);
   return Math.round((endMs - startMs) / 86_400_000);
+}
+
+function getClientIp(req: Request): string {
+  const forwardedFor = req.headers.get("x-forwarded-for");
+  const rawIp = forwardedFor?.split(",")[0]
+    || req.headers.get("cf-connecting-ip")
+    || req.headers.get("x-real-ip")
+    || "unknown";
+  return cleanText(rawIp, 80) || "unknown";
+}
+
+async function hashIpAddress(ipAddress: string, salt: string): Promise<string> {
+  const input = new TextEncoder().encode(`${salt}:${ipAddress}`);
+  const hash = await crypto.subtle.digest("SHA-256", input);
+  return Array.from(new Uint8Array(hash))
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+async function consumeOtpToken(supabase: ReturnType<typeof createClient>, otpId: string) {
+  await supabase
+    .from("otp_codes")
+    .update({
+      verification_token: null,
+      token_expires_at: new Date().toISOString(),
+    })
+    .eq("id", otpId);
 }
 
 async function sendEmail(input: {

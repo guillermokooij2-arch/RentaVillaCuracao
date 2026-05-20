@@ -504,14 +504,28 @@
                     </div>
                     <div class="form-group">
                         <label>E-mail</label>
-                        <input type="email" name="email" required placeholder="uw@email.com">
+                        <input type="email" name="email" required placeholder="uw@email.com" oninput="resetContactOtpIfEmailChanged()">
                     </div>
                 </div>
+                <input type="text" name="website" style="display:none;position:absolute;left:-9999px;" tabindex="-1" autocomplete="off">
                 <div class="form-row">
                     <div class="form-group full">
                         <label data-lang="nl">Bericht</label><label data-lang="en">Message</label>
                         <textarea name="message" rows="5" required placeholder="Uw bericht..."></textarea>
                     </div>
+                </div>
+                <div id="contactOtpStep" style="display:none;margin-bottom:16px;">
+                    <p class="form-hint" style="margin-bottom:8px;" data-lang="nl">📧 We hebben een verificatiecode naar uw e-mailadres gestuurd. Vul de code hieronder in.</p>
+                    <p class="form-hint" style="margin-bottom:8px;" data-lang="en">📧 We sent a verification code to your email address. Enter the code below.</p>
+                    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                        <input type="text" id="contactOtpInput" maxlength="6" placeholder="123456" style="width:120px;font-size:20px;letter-spacing:6px;text-align:center;padding:8px;" oninput="onContactOtpInput()">
+                        <button type="button" class="btn-aanvraag" id="contactVerifyOtpBtn" onclick="verifyContactOtp()" style="width:auto;padding:8px 16px;" disabled>
+                            <span data-lang="nl">Bevestigen</span><span data-lang="en">Confirm</span>
+                        </button>
+                    </div>
+                    <p id="contactOtpError" style="color:#ef4444;font-size:13px;margin-top:6px;display:none;"></p>
+                    <button type="button" onclick="requestContactOtp(true)" style="background:none;border:none;color:#6b7280;font-size:13px;cursor:pointer;margin-top:4px;padding:0;" data-lang="nl">Opnieuw versturen</button>
+                    <button type="button" onclick="requestContactOtp(true)" style="background:none;border:none;color:#6b7280;font-size:13px;cursor:pointer;margin-top:4px;padding:0;" data-lang="en">Resend code</button>
                 </div>
                 <button type="submit" class="btn-submit" id="contactSubmitBtn">
                     ✉️ <span data-lang="nl">Verstuur bericht</span><span data-lang="en">Send message</span>
@@ -730,7 +744,7 @@
             <div data-lang="nl">
                 <p><strong>RentaVillaCuracao</strong> respecteert uw privacy en verwerkt persoonsgegevens uitsluitend voor het verwerken van boekingen en het beantwoorden van vragen.</p>
                 <h4>Welke gegevens verzamelen wij?</h4>
-                <p>Naam, e-mailadres, telefoonnummer en reisdata die u zelf aan ons verstrekt via het contactformulier of per e-mail/WhatsApp.</p>
+                <p>Naam, e-mailadres, telefoonnummer, reisdata en technische beveiligingsgegevens zoals een gehashte IP-controle en browserinformatie die nodig zijn om spam en misbruik te beperken.</p>
                 <h4>Waarvoor gebruiken wij uw gegevens?</h4>
                 <p>Uitsluitend voor de verwerking van uw reservering. Uw gegevens worden nooit verkocht of gedeeld met derden voor marketingdoeleinden.</p>
                 <h4>Contact</h4>
@@ -739,7 +753,7 @@
             <div data-lang="en">
                 <p><strong>RentaVillaCuracao</strong> respects your privacy and processes personal data solely for processing bookings and answering enquiries.</p>
                 <h4>What data do we collect?</h4>
-                <p>Name, email address, phone number and travel dates you provide via the contact form or by email/WhatsApp.</p>
+                <p>Name, email address, phone number, travel dates and technical security data such as a hashed IP check and browser information needed to limit spam and abuse.</p>
                 <h4>How do we use your data?</h4>
                 <p>Solely for processing your reservation. Your data is never sold or shared with third parties for marketing purposes.</p>
                 <h4>Contact</h4>
